@@ -54,6 +54,7 @@ public class LinkedListTest extends TestCase {
         assertFalse(list.exists(2));
         list.insert(2);
         assertTrue(list.exists(2));
+
     }
 
 
@@ -68,9 +69,11 @@ public class LinkedListTest extends TestCase {
 
 
     public void testGetObjectAtIndex() {
-        
-       list.insert(1);
-       assertEquals(0,list.getObjectAtIndex(0));
+
+        assertNull(list.getObjectAtIndex(0));
+        list.insert(1);
+        assertEquals("1", list.getObjectAtIndex(0).toString());
+        assertFalse("1" == list.getObjectAtIndex(0).toString());
 
     }
 
