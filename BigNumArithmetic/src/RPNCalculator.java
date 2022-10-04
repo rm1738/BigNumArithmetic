@@ -38,8 +38,8 @@ public class RPNCalculator extends LinkedList {
         int i = 0;
         while (i < lSize) {
 
-            number1 = n1.get(i);
-            number2 = n2.get(i);
+            number1 = n1.getObjectAtIndex(i);
+            number2 = n2.getObjectAtIndex(i);
 
             if (n1 == null) {
                 sum = number2 + carry;
