@@ -42,12 +42,11 @@ import java.util.NoSuchElementException;
  * 
  * 
  */
-public class linkedlist<N>
+public class LinkedList<N>
 
 {
     private int length;
     private Node<N> head;
-  
 
     @SuppressWarnings("hiding")
     public class Node<N> {
@@ -93,7 +92,7 @@ public class linkedlist<N>
     /**
      * 
      */
-    public linkedlist() {
+    public LinkedList() {
         head = null;
         length = 0;
     }
@@ -146,9 +145,10 @@ public class linkedlist<N>
         length++;
     }
 
-/**
- * 
- */
+
+    /**
+     * 
+     */
     public String toString() {
         String end = "{";
 
@@ -163,9 +163,6 @@ public class linkedlist<N>
         end += "}";
         return end;
     }
-
-
-   
 
 
     /**
@@ -196,6 +193,14 @@ public class linkedlist<N>
             return null;
         }
         return data;
+    }
+
+
+    /**
+     * @return head node
+     */
+    public Node<N> head() {
+        return head;
     }
 
 
