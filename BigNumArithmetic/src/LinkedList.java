@@ -231,26 +231,5 @@ public class LinkedList<N>
         length = 0;
 
     }
-    
-    
-    public N get(int index) {
-        Node<N> current = head;
-        int currentIndex = 0;
-        N data = null;
-        while (current != null) {
-            if (currentIndex == index) {
-                data = current.data;
-            }
-            currentIndex++;
-            current = current.next;
-        }
-
-        // check if the data was null...
-        if (data == null) {
-            // ... if so throw an exception
-            return null;
-        }
-        return data;
-    }
 
 }
