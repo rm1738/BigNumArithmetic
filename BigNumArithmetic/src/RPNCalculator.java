@@ -36,30 +36,32 @@ public class RPNCalculator extends LinkedList {
         Integer r;
         Integer carry = 0;
         boolean carryN = false;
+        boolean end = false;
         int i = 0;
-        
-       
 
         while (i < lSize) {
 
             n1 = num1.getObjectAtIndex(i);
             n2 = num2.getObjectAtIndex(i);
-            
+
+            if (i == lSize - 1) {
+                end = true;
+            }
+
             if (n1 == null) {
 
                 r = n2 + carry;
                 result.insert(r % 10);
                 carry = 0;
-                
-                if(r>=10)
-                {
-                    carryN = true; 
+
+                if (r >= 10) {
+                    carryN = true;
                 }
 
-                if (carryN = true) {
+                if (carryN == true) {
                     carry = (r % 100) / 10;
 
-                    if (i == lSize - 1) {
+                    if (end == true) {
                         result.insert(carry);
                     }
                 }
@@ -72,7 +74,7 @@ public class RPNCalculator extends LinkedList {
 
                 if (r >= 10) {
                     carry = (r % 100) / 10;
-                    if (i == lSize - 1) {
+                    if (end == true) {
                         result.insert(carry);
                     }
                 }
@@ -89,7 +91,7 @@ public class RPNCalculator extends LinkedList {
 
                     carry = (r % 100) / 10;
 
-                    if (i == lSize - 1) {
+                    if (end == true) {
                         result.insert(carry);
                     }
                 }
