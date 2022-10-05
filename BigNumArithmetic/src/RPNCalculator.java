@@ -9,62 +9,99 @@ public class RPNCalculator extends LinkedList {
         for (int i = n1.size() - 1; i >= 0; i--) {
 
             // Append the elements in reverse order
-            revLinkedList.insert(n1.get(i));
+            revLinkedList.insert(n1.getObjectAtIndex(i));
         }
         // Return the reversed arraylist
         return revLinkedList;
     }
 
 
-    @SuppressWarnings("unused")
-    public static LinkedList<Integer> addition(
-        LinkedList<Integer> n1,
-        LinkedList<Integer> n2) {
+    public static LinkedList<Integer> add(
+        LinkedList<Integer> num1,
+        LinkedList<Integer> num2) {
 
-        LinkedList<Integer> p1 = reverseLinkedList(n1);
-        LinkedList<Integer> p2 = reverseLinkedList(n2);
         LinkedList<Integer> result = new LinkedList<Integer>();
 
-        int sizeA = p1.size();
-        int sizeB = p2.size();
-        int lSize = p1.size();
-        int sum = 0;
-        int carry = 0;
+        int size1 = num1.size();
+        int size2 = num2.size();
 
-        if (p2.size() > p1.size()) {
-            lSize = p2.size();
+        int lSize = size1;
+
+        if (size2 > size1) {
+            lSize = size2;
         }
-        int number1;
-        int number2;
+
+        Integer n1;
+        Integer n2;
+        Integer r;
+        Integer carry = 0;
+        boolean carryN = false;
         int i = 0;
+
         while (i < lSize) {
-            number1 = p1.getObjectAtIndex(i);
-            number2 = p2.getObjectAtIndex(i);
 
-            if (p1 == null) {
-                sum = number2 + carry;
-                result.insert(sum % 10);
+            n1 = num1.getObjectAtIndex(i);
+            n2 = num2.getObjectAtIndex(i);
+
+            if (n1 == null) {
+
+                r = n2 + carry;
+                result.insert(r % 10);
                 carry = 0;
 
+                if (r > 9) {
+                    carryN = true;
+                }
+
+                if (carryN == true) {
+                    carry = (r % 100) / 10;
+
+                    if (i == lSize - 1) {
+                        result.insert(carry);
+                    }
+                }
+
             }
-            else if (p2 == null) {
-                sum = number1 + carry;
-                result.insert(sum % 10);
+            else if (n2 == null) {
+                r = n1 + carry;
+                result.insert(r % 10);
                 carry = 0;
+
+                if (r > 9) {
+                    carryN = true;
+                }
+
+                if (carryN == true) {
+                    carry = (r % 100) / 10;
+                    if (i == lSize - 1) {
+                        result.insert(carry);
+                    }
+                }
             }
+
             else {
-                sum = number1 + number2 + carry;
-                result.insert(sum % 10);
-                carry = 0;
-            }
 
-            if (sum >= 10) {
-                carry = (sum % 100) / 10;
-            }
-            if (i == lSize - 1) {
-                result.insert(carry);
+                r = n1 + n2 + carry;
+
+                result.insert(r % 10);
+                carry = 0;
+
+                if (r > 9) {
+                    carryN = true;
+
+                    if (r > 9) {
+
+                        carry = (r % 100) / 10;
+
+                        if (i == lSize - 1) {
+                            result.insert(carry);
+                        }
+                    }
+                }
+
             }
             i++;
+
         }
         return result;
     }
