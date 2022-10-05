@@ -1,49 +1,53 @@
 
+@SuppressWarnings("rawtypes")
 public class RPNCalculator extends LinkedList {
-//
-// public LinkedList<Integer> reverseList(LinkedList<Integer> head) {
-// LinkedList<Integer> last = null;
-// while (head != null) {
-// // keep the next node
-// LinkedList<Integer> tmp = head.next;
-// // reverse the link
-// head.next = last;
-// // update the last node and the current node
-// last = head;
-// head = tmp;
-// }
-// return last;
-// }
+
+    // Takes a linkedlist as a parameter and returns a reversed linkedlist
+    public static LinkedList<Integer> reverseLinkedList(
+        LinkedList<Integer> n1) {
+        LinkedList<Integer> revLinkedList = new LinkedList<Integer>();
+        for (int i = n1.size() - 1; i >= 0; i--) {
+
+            // Append the elements in reverse order
+            revLinkedList.insert(n1.get(i));
+        }
+        // Return the reversed arraylist
+        return revLinkedList;
+    }
+
 
     @SuppressWarnings("unused")
     public static LinkedList<Integer> addition(
         LinkedList<Integer> n1,
         LinkedList<Integer> n2) {
 
+        LinkedList<Integer> p1 = reverseLinkedList(n1);
+        LinkedList<Integer> p2 = reverseLinkedList(n2);
         LinkedList<Integer> result = new LinkedList<Integer>();
-        int sizeA = n1.size();
-        int sizeB = n2.size();
-        int lSize = n1.size();
+
+        int sizeA = p1.size();
+        int sizeB = p2.size();
+        int lSize = p1.size();
         int sum = 0;
         int carry = 0;
 
-        if (n2.size() > n1.size()) {
-            lSize = n2.size();
+        if (p2.size() > p1.size()) {
+            lSize = p2.size();
         }
         int number1;
         int number2;
         int i = 0;
         while (i < lSize) {
-            number1 = n1.getObjectAtIndex(i);
-            number2 = n2.getObjectAtIndex(i);
+            number1 = p1.getObjectAtIndex(i);
+            number2 = p2.getObjectAtIndex(i);
 
-            if (n1 == null) {
+            if (p1 == null) {
                 sum = number2 + carry;
                 result.insert(sum % 10);
                 carry = 0;
 
             }
-            else if (n2 == null) {
+            else if (p2 == null) {
                 sum = number1 + carry;
                 result.insert(sum % 10);
                 carry = 0;
@@ -60,6 +64,7 @@ public class RPNCalculator extends LinkedList {
             if (i == lSize - 1) {
                 result.insert(carry);
             }
+            i++;
         }
         return result;
     }
@@ -76,7 +81,7 @@ public class RPNCalculator extends LinkedList {
         LinkedList<Integer>.Node<Integer> first = n1.head();
         LinkedList<Integer>.Node<Integer> second = n2.head();
 
-        while (first != null || second != null) {
+        while (first.next() != null || second.next() != null) {
 
             if (n1 != null) {
                 num1 = num1 * 10 + first.getData();
@@ -93,6 +98,7 @@ public class RPNCalculator extends LinkedList {
 
             res = num1 * num2;
             result.insert(res % 10);
+            res = res / 10;
 
         }
         return result;
