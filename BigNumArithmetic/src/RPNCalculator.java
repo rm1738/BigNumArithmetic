@@ -115,7 +115,7 @@ public class RPNCalculator extends LinkedList {
         LinkedList<Integer>.Node<Integer> first = n1.head();
         LinkedList<Integer>.Node<Integer> second = n2.head();
 
-        while (first.next() != null || second.next() != null) {
+        while (first != null || second != null) {
 
             if (n1 != null) {
                 num1 = num1 * 10 + first.getData();
@@ -130,13 +130,16 @@ public class RPNCalculator extends LinkedList {
 
             }
 
-            res = num1 * num2;
-            result.insert(res % 10);
-            res = res / 10;
-
         }
+        res = num1 * num2;
+
+        while (res != 0) {
+            res = res % 10;
+            res = res / 10;
+            result.insert(res);
+        }
+
         return result;
 
     }
-
 }
