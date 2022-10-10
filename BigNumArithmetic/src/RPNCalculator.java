@@ -111,7 +111,8 @@ public class RPNCalculator extends LinkedList {
         LinkedList<Integer> result = new LinkedList<Integer>();
         int num1 = 0;
         int num2 = 0;
-        int res = 0;
+        long res = 0;
+        int mod;
         LinkedList<Integer>.Node<Integer> first = n1.head();
         LinkedList<Integer>.Node<Integer> second = n2.head();
 
@@ -134,12 +135,15 @@ public class RPNCalculator extends LinkedList {
         res = num1 * num2;
 
         while (res != 0) {
-            res = res % 10;
+            mod = (int)(res % 10);
+            result.insert(mod);
             res = res / 10;
-            result.insert(res);
+
         }
 
-        return result;
+        LinkedList<Integer> rev = RPNCalculator.reverseLinkedList(result);
+
+        return rev;
 
     }
 }
