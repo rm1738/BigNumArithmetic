@@ -1,95 +1,128 @@
 import student.TestCase;
 
+public class RPNTEST extends student.TestCase {
+    private LinkedList<Long> list;
+    private LinkedList<Long> list1;
+    private LinkedList<Long> list2;
+    private RPNCalculator tester;
+
+    public void setUp() {
+        list = new LinkedList<Long>();
+        list1 = new LinkedList<Long>();
+        list2 = new LinkedList<Long>();
+        tester = new RPNCalculator();
+
+    }
 
 
-public class RPNTEST extends student.TestCase{
-    private linkedlist<Integer> list;
-    private linkedlist<Integer> list1;
-    private linkedlist<Integer> list2;
-    private RPN tester;
-    
-    
-    public void setUp()
-    {
-        list = new linkedlist<Integer>();
-        list1 = new linkedlist<Integer>();
-        list2 = new linkedlist<Integer>();
-        tester = new RPN();
-        
-        
-        
-    }
-    
-    
-    public void testReverse()
-    {
-        list.insert(2);
-        list.insert(3);
-        list.insert(4);
-        list1.insert(5);
-        list1.insert(6);
-        list1.insert(7);
-        list2.insert(4);
-        list2.insert(3);
-        list2.insert(2);
-        linkedlist<Integer> l3 = new linkedlist<Integer>();
-        linkedlist<Integer> l4 = new linkedlist<Integer>();
-        l3 = tester.reverselinkedlist(list);
-        
-        // 234 567
-        assertTrue(l3.equals(list2));   
-        
-    }
-    /**
-     * 
-     */
-    public void testAdd()
-    {
-        list.insert(2);
-        list.insert(3);
-        list.insert(4);
-        list1.insert(5);
-        list1.insert(6);
-        list1.insert(7);
-        
-        list2 = RPN.add(list, list1);
-        
-        linkedlist<Integer> list3 = new linkedlist<Integer>();
-        list3.insert(7);
-        list3.insert(9);
-        list3.insert(1);
-        list3.insert(1);
-        assertTrue(list3.equals(list2));
-        
-    }
-    public void testAdd2()
-    {
+    public void testReverse() {
+        list.insert((long)2);
+        list.insert((long)3);
+        list.insert((long)4);
 
-        list.insert(2);
-        list.insert(3);
-        list.insert(4);
-        list.insert(5);
-        list1.insert(1);
-        list1.insert(2);
-        list1.insert(3);
-        //2345 //123
-        list2 = RPN.add(list, list1);
-        linkedlist<Integer> list3 = new linkedlist<Integer>();
-        list3.insert(2);
-        list3.insert(4);
-        list3.insert(6);
-        list3.insert(8);
-     
-        //assertTrue(list3.equals(list2));
-        assertEquals(list3, list2);
-        
+        list1.insert((long)5);
+        list1.insert((long)6);
+        list1.insert((long)7);
+
+        list2.insert((long)4);
+        list2.insert((long)3);
+        list2.insert((long)2);
+
+        LinkedList<Long> l3 = new LinkedList<Long>();
+        l3 =  RPNCalculator.reverseLinkedList(list);
+
+        assertTrue(list2.equals(l3));
+
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+    public void testinsert() {
+
+        list.insert((long)1);
+        list.insert((long)2);
+        list.insert((long)6);
+        list.insert((long)1);
+        list2.insert((long)9);
+        list2.insert((long)9);
+        list2.insert((long)9);
+        LinkedList<Long> result2 = new LinkedList<Long>();
+        result2.insert((long)0);
+        result2.insert((long)2);
+        result2.insert((long)6);
+        result2.insert((long)2);
+        assertEquals(result2, RPNCalculator.add(list, list2));
+
+    }
+
+
+    public void testadd2() {
+        list.insert((long)1);
+        list.insert((long)2);
+        list.insert((long)3);
+        list.insert((long)4);
+
+        list1.insert((long)1);
+        list1.insert((long)2);
+        list1.insert((long)3);
+
+        list2.insert((long)2);
+        list2.insert((long)4);
+        list2.insert((long)6);
+        list2.insert((long)4);
+
+        assertEquals(list2, RPNCalculator.add(list, list1));
+    }
+
+
+    public void testMulti() {
+
+        list.insert((long)7);
+        list.insert((long)7);
+        list.insert((long)0);
+        list.insert((long)0);
+        list.insert((long)0);
+
+        list1.insert((long)8);
+        list1.insert((long)0);
+        list1.insert((long)0);
+        list1.insert((long)0);
+        list1.insert((long)0);
+
+        list2.insert((long)6);
+        list2.insert((long)1);
+        list2.insert((long)6);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        System.out.println(RPNCalculator.multi(list, list1));
+
+        assertEquals(list2, RPNCalculator.multi(list, list1));
+
+    }
+
+
+    public void testMulti2() {
+
+        list.insert((long)2);
+        list.insert((long)0);
+        list.insert((long)0);
+
+        list1.insert((long)3);
+        list1.insert((long)0);
+        list1.insert((long)0);
+
+        list2.insert((long)6);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        list2.insert((long)0);
+        list2.insert((long)0);
+
+        assertEquals(list2, RPNCalculator.multi(list, list1));
+
+    }
 
 }
