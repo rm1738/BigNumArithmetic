@@ -2,28 +2,25 @@
 @SuppressWarnings("rawtypes")
 public class RPNCalculator extends LinkedList {
 
-    // Takes a linkedlist as a parameter and returns a reversed linkedlist
-    public static LinkedList<Integer> reverseLinkedList(
-        LinkedList<Integer> n1) {
-        LinkedList<Integer> revLinkedList = new LinkedList<Integer>();
-        for (int i = n1.size() - 1; i >= 0; i--) {
+    public static LinkedList<Long> reverseLinkedList(LinkedList<Long> result) {
+        LinkedList<Long> revLinkedList = new LinkedList<Long>();
+        for (int i = result.size() - 1; i >= 0; i--) {
 
-            // Append the elements in reverse order
-            revLinkedList.insert(n1.getObjectAtIndex(i));
+            revLinkedList.insert(result.getObjectAtIndex(i));
         }
-        // Return the reversed arraylist
+
         return revLinkedList;
     }
 
 
-    public static LinkedList<Integer> add(
-        LinkedList<Integer> num1,
-        LinkedList<Integer> num2) {
+    public static LinkedList<Long> add(
+        LinkedList<Long> list,
+        LinkedList<Long> list2) {
 
-        LinkedList<Integer> result = new LinkedList<Integer>();
+        LinkedList<Long> result = new LinkedList<Long>();
 
-        int size1 = num1.size();
-        int size2 = num2.size();
+        int size1 = list.size();
+        int size2 = list2.size();
 
         int lSize = size1;
 
@@ -31,18 +28,18 @@ public class RPNCalculator extends LinkedList {
             lSize = size2;
         }
 
-        Integer n1;
-        Integer n2;
-        Integer r;
-        Integer carry = 0;
+        Long n1;
+        Long n2;
+        Long r;
+        Long carry = (long)0;
         boolean carryN = false;
         boolean end = false;
         int i = 0;
 
         while (i < lSize) {
 
-            n1 = num1.getObjectAtIndex(i);
-            n2 = num2.getObjectAtIndex(i);
+            n1 = list.getObjectAtIndex(i);
+            n2 = list2.getObjectAtIndex(i);
 
             if (i == lSize - 1) {
                 end = true;
@@ -52,7 +49,7 @@ public class RPNCalculator extends LinkedList {
 
                 r = n2 + carry;
                 result.insert(r % 10);
-                carry = 0;
+                carry = (long)0;
 
                 if (r >= 10) {
                     carryN = true;
@@ -70,7 +67,7 @@ public class RPNCalculator extends LinkedList {
             else if (n2 == null) {
                 r = n1 + carry;
                 result.insert(r % 10);
-                carry = 0;
+                carry = (long)0;
 
                 if (r >= 10) {
                     carry = (r % 100) / 10;
@@ -85,7 +82,7 @@ public class RPNCalculator extends LinkedList {
                 r = n1 + n2 + carry;
 
                 result.insert(r % 10);
-                carry = 0;
+                carry = (long)0;
 
                 if (r >= 10) {
 
@@ -104,19 +101,19 @@ public class RPNCalculator extends LinkedList {
     }
 
 
-    public static LinkedList<Integer> multi(
-        LinkedList<Integer> n1,
-        LinkedList<Integer> n2) {
+    public static LinkedList<Long> multi(
+        LinkedList<Long> n1,
+        LinkedList<Long> n2) {
 
-        LinkedList<Integer> result = new LinkedList<Integer>();
-        int num1 = 0;
-        int num2 = 0;
+        LinkedList<Long> result = new LinkedList<Long>();
+        long num1 = 0;
+        long num2 = 0;
         long res = 0;
-        int mod;
-        LinkedList<Integer>.Node<Integer> first = n1.head();
-        LinkedList<Integer>.Node<Integer> second = n2.head();
+        long mod = 0;
+        LinkedList<Long>.Node<Long> first = n1.head();
+        LinkedList<Long>.Node<Long> second = n2.head();
 
-        while (first != null || second != null) {
+        while (first != null) {
 
             if (n1 != null) {
                 num1 = num1 * 10 + first.getData();
@@ -124,26 +121,87 @@ public class RPNCalculator extends LinkedList {
 
             }
 
+        }
+
+        while (second != null)
             if (n2 != null) {
 
                 num2 = num2 * 10 + second.getData();
                 second = second.next();
-
             }
 
-        }
         res = num1 * num2;
 
-        while (res != 0) {
-            mod = (int)(res % 10);
+        while (res > 0) {
+            mod = res % 10;
             result.insert(mod);
             res = res / 10;
 
         }
 
-        LinkedList<Integer> rev = RPNCalculator.reverseLinkedList(result);
+        LinkedList<Long> rev = RPNCalculator.reverseLinkedList(result);
 
         return rev;
 
     }
+
+
+    public static LinkedList<Long> exp(
+        LinkedList<Long> number,
+        LinkedList<Long> power) {
+
+        LinkedList<Long> result = new LinkedList<Long>();
+
+        for (int i = 0; i < power.size(); i++) {
+            Long num = power.getObjectAtIndex(i);
+
+            if (num == 0) {
+                result.insert((long)1);
+            }
+
+            if (num == 1) {
+                return number;
+            }
+
+            if (num == 2) {
+
+                return multi(number, number);
+
+            }
+
+            if (num % 2 == 0) {
+                LinkedList<Long> newNumber1 = multi(number, number);
+                num = num / 2;
+                LinkedList<Long> newNumber2 = multi(number, number);
+
+                for (int j = 0; i < num - 1; j++) {
+
+                    LinkedList<Long> newNumber3 = multi(newNumber1, newNumber2);
+                    result = newNumber3;
+
+                }
+
+                if (num % 2 != 0) {
+
+                    LinkedList<Long> newNumber11 = multi(number, number);
+                    num = num - 1 / 2;
+                    LinkedList<Long> newNumber21 = multi(number, number);
+
+                    for (int j = 0; i < num - 1; j++) {
+
+                        LinkedList<Long> newNumber3 = multi(newNumber11,
+                            newNumber21);
+                        result = newNumber3;
+
+                    }
+
+                }
+
+            }
+
+        }
+        return result;
+
+    }
+
 }
