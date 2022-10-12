@@ -47,6 +47,7 @@ public class LinkedList<N>
 {
     private int length;
     private Node<N> head;
+    private Node<N> curr;
 
     @SuppressWarnings("hiding")
     public class Node<N> {
@@ -225,11 +226,60 @@ public class LinkedList<N>
     }
 
 
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() == obj.getClass()) {
+            @SuppressWarnings("unchecked")
+            LinkedList<N> other = ((LinkedList<N>)obj);
+            if (other.size() == this.size()) {
+                Node<N> current = head;
+                Node<N> otherCurrent = other.head;
+                while (current != null) {
+                    if (!current.getData().equals(otherCurrent.getData())) {
+                        return false;
+                    }
+                    current = current.next();
+                    otherCurrent = otherCurrent.next();
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     public void clear() {
 
         head = null;
         length = 0;
 
     }
+
+
+    public Object[] toArray() {
+
+        Object[] array = new Object[this.size()];
+
+        Node<N> current = head;
+        int count = 0;
+        while (current != null) {
+            array[count] = current.getData();
+            current = current.next;
+            count++;
+        }
+
+        return array;
+    }
+
+
+    public void moveToStart() {
+        curr = head.next();
+    } // Set curr at list start
 
 }
