@@ -43,15 +43,20 @@ public class RPNTEST extends student.TestCase {
         list.insert((Integer)2);
         list.insert((Integer)6);
         list.insert((Integer)1);
+        System.out.println(list);
+
         list2.insert((Integer)9);
         list2.insert((Integer)9);
         list2.insert((Integer)9);
+        System.out.println(list2);
         LinkedList<Integer> result2 = new LinkedList<Integer>();
         result2.insert((Integer)0);
         result2.insert((Integer)2);
         result2.insert((Integer)6);
         result2.insert((Integer)2);
+        // System.out.println(result2);
         assertEquals(result2, RPNCalculator.add(list, list2));
+        System.out.println(RPNCalculator.add(list, list2));
 
     }
 
@@ -77,29 +82,20 @@ public class RPNTEST extends student.TestCase {
 
     public void testMulti() {
 
-        list.insert((Integer)7);
-        list.insert((Integer)7);
-        list.insert((Integer)0);
-        list.insert((Integer)0);
-        list.insert((Integer)0);
+        list.insert((Integer)1);
+        list.insert((Integer)2);
+        list.insert((Integer)3);
 
-        list1.insert((Integer)8);
-        list1.insert((Integer)0);
-        list1.insert((Integer)0);
-        list1.insert((Integer)0);
-        list1.insert((Integer)0);
+        list1.insert((Integer)1);
+        list1.insert((Integer)2);
+        list1.insert((Integer)4);
 
-        list2.insert((Integer)6);
-        list2.insert((Integer)1);
-        list2.insert((Integer)6);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        System.out.println(RPNCalculator.multiply(list, list1));
+        list2.insert(1);
+        list2.insert(4);
+        list2.insert(1);
+        list2.insert(5);
+        list2.insert(3);
+        list2.insert(1);
 
         assertEquals(list2, RPNCalculator.multiply(list, list1));
 
@@ -108,19 +104,38 @@ public class RPNTEST extends student.TestCase {
 
     public void testMulti2() {
 
+        list.insert((Integer)0);
+        list.insert((Integer)0);
         list.insert((Integer)2);
-        list.insert((Integer)0);
-        list.insert((Integer)0);
 
+        list1.insert((Integer)0);
+        list1.insert((Integer)0);
         list1.insert((Integer)3);
-        list1.insert((Integer)0);
-        list1.insert((Integer)0);
 
+        list2.insert((Integer)0);
+        list2.insert((Integer)0);
+        list2.insert((Integer)0);
+        list2.insert((Integer)0);
         list2.insert((Integer)6);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
-        list2.insert((Integer)0);
+
+        assertEquals(list2, RPNCalculator.multiply(list, list1));
+
+    }
+
+
+    public void testMulti3() {
+
+        list.insert((Integer)8);
+        list.insert((Integer)2);
+
+
+        list1.insert((Integer)1);
+        list1.insert((Integer)3);
+
+     
+        list2.insert((Integer)8);
+        list2.insert((Integer)6);
+        list2.insert((Integer)8);
 
         assertEquals(list2, RPNCalculator.multiply(list, list1));
 
@@ -133,8 +148,6 @@ public class RPNTEST extends student.TestCase {
         list1.insert((Integer)3);
 
         list2.insert((Integer)8);
-   
-       
 
         assertEquals(list2, RPNCalculator.exponentiate(list, list1));
 
@@ -152,8 +165,10 @@ public class RPNTEST extends student.TestCase {
         assertEquals(list2, RPNCalculator.exponentiate(list, list1));
 
     }
-    
-    
-    
+
+
+    public void testExponent3() {
+
+    }
 
 }
