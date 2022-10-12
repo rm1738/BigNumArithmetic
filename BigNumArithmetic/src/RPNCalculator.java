@@ -1,23 +1,23 @@
-
 @SuppressWarnings("rawtypes")
 public class RPNCalculator extends LinkedList {
 
-    public static LinkedList<Long> reverseLinkedList(LinkedList<Long> result) {
-        LinkedList<Long> revLinkedList = new LinkedList<Long>();
-        for (int i = result.size() - 1; i >= 0; i--) {
+    public static LinkedList<Integer> reverseLinkedList(
+        LinkedList<Integer> l3) {
+        LinkedList<Integer> revLinkedList = new LinkedList<Integer>();
+        for (int i = l3.size() - 1; i >= 0; i--) {
 
-            revLinkedList.insert(result.getObjectAtIndex(i));
+            revLinkedList.insert(l3.getObjectAtIndex(i));
         }
 
         return revLinkedList;
     }
 
 
-    public static LinkedList<Long> add(
-        LinkedList<Long> list,
-        LinkedList<Long> list2) {
+    public static LinkedList<Integer> add(
+        LinkedList<Integer> list,
+        LinkedList<Integer> list2) {
 
-        LinkedList<Long> result = new LinkedList<Long>();
+        LinkedList<Integer> result = new LinkedList<Integer>();
 
         int size1 = list.size();
         int size2 = list2.size();
@@ -28,10 +28,10 @@ public class RPNCalculator extends LinkedList {
             lSize = size2;
         }
 
-        Long n1;
-        Long n2;
-        Long r;
-        Long carry = (long)0;
+        Integer n1;
+        Integer n2;
+        Integer r;
+        Integer carry = 0;
         boolean carryN = false;
         boolean end = false;
         int i = 0;
@@ -49,7 +49,7 @@ public class RPNCalculator extends LinkedList {
 
                 r = n2 + carry;
                 result.insert(r % 10);
-                carry = (long)0;
+                carry = 0;
 
                 if (r >= 10) {
                     carryN = true;
@@ -67,7 +67,7 @@ public class RPNCalculator extends LinkedList {
             else if (n2 == null) {
                 r = n1 + carry;
                 result.insert(r % 10);
-                carry = (long)0;
+                carry = 0;
 
                 if (r >= 10) {
                     carry = (r % 100) / 10;
@@ -82,7 +82,7 @@ public class RPNCalculator extends LinkedList {
                 r = n1 + n2 + carry;
 
                 result.insert(r % 10);
-                carry = (long)0;
+                carry = 0;
 
                 if (r >= 10) {
 
@@ -101,107 +101,102 @@ public class RPNCalculator extends LinkedList {
     }
 
 
-    public static LinkedList<Long> multi(
-        LinkedList<Long> n1,
-        LinkedList<Long> n2) {
-
-        LinkedList<Long> result = new LinkedList<Long>();
-        long num1 = 0;
-        long num2 = 0;
-        long res = 0;
-        long mod = 0;
-        LinkedList<Long>.Node<Long> first = n1.head();
-        LinkedList<Long>.Node<Long> second = n2.head();
-
-        while (first != null) {
-
-            if (n1 != null) {
-                num1 = num1 * 10 + first.getData();
-                first = first.next();
-
+    public static LinkedList<Integer> multiply(
+        LinkedList<Integer> list1,
+        LinkedList<Integer> list2) {
+        // adds extra 0s to the end of the shorter list for easier
+        // multiplication and addition
+        if (list1.size() > list2.size()) {
+            int diff = list1.size() - list2.size();
+            for (int i = 0; i < diff; i++) {
+                list2.insert(0);
             }
-
+        }
+        else if (list1.size() < list2.size()) {
+            int diff = list2.size() - list1.size();
+            for (int i = 0; i < diff; i++) {
+                list1.insert(0);
+            }
         }
 
-        while (second != null)
-            if (n2 != null) {
+        LinkedList<Integer> sum1 = new LinkedList<Integer>();
+        LinkedList<Integer> sum2 = new LinkedList<Integer>();
+        LinkedList<Integer> totalSum = new LinkedList<Integer>();
+        int currSum;
+        int carry = 0;
+        for (int i = 0; i < list1.size(); i++) {
+            totalSum.clear();
+            LinkedList<Integer> currSumList = new LinkedList<Integer>();
+            Integer num1 = list1.getObjectAtIndex(i);
 
-                num2 = num2 * 10 + second.getData();
-                second = second.next();
+            for (int j = 0; j < i; j++) {
+                currSumList.insert(0); // adds extra 0s depending on how far
+                                       // into the multiplication the program is
             }
+            // multiplies the "top" list by j's element in the "bottom" list
+            for (int j = 0; j < list2.size(); j++) {
+                int num2 = list2.getObjectAtIndex(i);
+                currSum = num1 * num2 + carry;
+                carry = currSum / 10;
+                currSumList.insert(currSum % 10);
+            }
+            // this if else chain is for copying the contents of one list into
+            // another based on the current sum
+            if (i == 0) {
+                for (int j = 0; j < currSumList.size(); j++) {
+                    sum1.insert(currSumList.getObjectAtIndex(j));
 
-        res = num1 * num2;
+                }
+            }
+            else {
+                for (int j = 0; j < currSumList.size(); j++) {
+                    sum2.insert(currSumList.getObjectAtIndex(j));
 
-        while (res > 0) {
-            mod = res % 10;
-            result.insert(mod);
-            res = res / 10;
+                }
+            }
+            totalSum = add(sum1, sum2);
+            sum1.clear();
+            // copies the result of the addition into sum1 for the next
+            // iteration
+            for (int j = 0; j < totalSum.size(); j++) {
+                sum1.insert(totalSum.getObjectAtIndex(j));
 
+            }
+            
+            list2.moveToStart();
+            sum2.clear();
         }
-
-        LinkedList<Long> rev = RPNCalculator.reverseLinkedList(result);
-
-        return rev;
-
+        return totalSum;
     }
 
 
-    public static LinkedList<Long> exp(
-        LinkedList<Long> number,
-        LinkedList<Long> power) {
+    public static LinkedList<Integer> exponentiate(
+        LinkedList<Integer> list1,
+        LinkedList<Integer> newList2) {
 
-        LinkedList<Long> result = new LinkedList<Long>();
+        LinkedList<Integer> result = new LinkedList<Integer>();
 
-        for (int i = 0; i < power.size(); i++) {
-            Long num = power.getObjectAtIndex(i);
+        int i = 0;
+        while (i < newList2.size()) {
+            Integer num = newList2.getObjectAtIndex(i);
 
             if (num == 0) {
-                result.insert((long)1);
+                result.insert(1);
+                return result;
             }
-
-            if (num == 1) {
-                return number;
+            else if (num % 2 == 0) {
+                LinkedList<Integer> newList = new LinkedList<Integer>();
+                newList.insert(num / 2);
+                return exponentiate(multiply(list1, list1), newList);
             }
-
-            if (num == 2) {
-
-                return multi(number, number);
-
+            else {
+                LinkedList<Integer> newList = new LinkedList<Integer>();
+                newList.insert((num - 1) / 2);
+                return multiply(list1, exponentiate(multiply(list1, list1),
+                    newList));
             }
-
-            if (num % 2 == 0) {
-                LinkedList<Long> newNumber1 = multi(number, number);
-                num = num / 2;
-                LinkedList<Long> newNumber2 = multi(number, number);
-
-                for (int j = 0; i < num - 1; j++) {
-
-                    LinkedList<Long> newNumber3 = multi(newNumber1, newNumber2);
-                    result = newNumber3;
-
-                }
-
-                if (num % 2 != 0) {
-
-                    LinkedList<Long> newNumber11 = multi(number, number);
-                    num = num - 1 / 2;
-                    LinkedList<Long> newNumber21 = multi(number, number);
-
-                    for (int j = 0; i < num - 1; j++) {
-
-                        LinkedList<Long> newNumber3 = multi(newNumber11,
-                            newNumber21);
-                        result = newNumber3;
-
-                    }
-
-                }
-
-            }
-
         }
         return result;
-
     }
 
 }
