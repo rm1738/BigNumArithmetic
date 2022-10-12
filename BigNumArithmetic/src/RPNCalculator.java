@@ -92,6 +92,7 @@ public class RPNCalculator extends LinkedList {
                         result.insert(carry);
                     }
                 }
+
             }
             i++;
 
@@ -135,7 +136,7 @@ public class RPNCalculator extends LinkedList {
             }
             // multiplies the "top" list by j's element in the "bottom" list
             for (int j = 0; j < list2.size(); j++) {
-                int num2 = list2.getObjectAtIndex(i);
+                Integer num2 = list2.getObjectAtIndex(j);
                 currSum = num1 * num2 + carry;
                 carry = currSum / 10;
                 currSumList.insert(currSum % 10);
@@ -162,7 +163,7 @@ public class RPNCalculator extends LinkedList {
                 sum1.insert(totalSum.getObjectAtIndex(j));
 
             }
-            
+
             list2.moveToStart();
             sum2.clear();
         }
