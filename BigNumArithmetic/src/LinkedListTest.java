@@ -4,13 +4,16 @@ import student.TestCase;
 @SuppressWarnings("unused")
 public class LinkedListTest extends TestCase {
 
-    private linkedlist<Integer> list;
+    private LinkedList<Integer> list;
+    private LinkedList<Integer> list2;
 
     /**
      * Initializes test objects.
      */
     public void setUp() {
-        list = new linkedlist<Integer>();
+        list = new LinkedList<Integer>();
+        list2 = new LinkedList<Integer>();
+
     }
 
 
