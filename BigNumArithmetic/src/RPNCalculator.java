@@ -1,18 +1,6 @@
 @SuppressWarnings("rawtypes")
 public class RPNCalculator extends LinkedList {
 
-    public static LinkedList<Integer> reverseLinkedList(
-        LinkedList<Integer> l3) {
-        LinkedList<Integer> revLinkedList = new LinkedList<Integer>();
-        for (int i = l3.size() - 1; i >= 0; i--) {
-
-            revLinkedList.insert(l3.getObjectAtIndex(i));
-        }
-
-        return revLinkedList;
-    }
-
-
     public static LinkedList<Integer> add(
         LinkedList<Integer> list,
         LinkedList<Integer> list2) {
@@ -124,11 +112,12 @@ public class RPNCalculator extends LinkedList {
         LinkedList<Integer> sum2 = new LinkedList<Integer>();
         LinkedList<Integer> totalSum = new LinkedList<Integer>();
         int currSum;
-        int carry = 0;
-        for (int i = 0; i < list1.size(); i++) {
+
+        for (int i = 0; i < list2.size(); i++) {
+            int carry = 0;
             totalSum.clear();
             LinkedList<Integer> currSumList = new LinkedList<Integer>();
-            Integer num1 = list1.getObjectAtIndex(i);
+            Integer num1 = list2.getObjectAtIndex(i);
 
             for (int j = 0; j < i; j++) {
                 currSumList.insert(0); // adds extra 0s depending on how far
@@ -136,13 +125,20 @@ public class RPNCalculator extends LinkedList {
             }
             // multiplies the "top" list by j's element in the "bottom" list
             for (int j = 0; j < list2.size(); j++) {
-                Integer num2 = list2.getObjectAtIndex(j);
+                Integer num2 = list1.getObjectAtIndex(j);
                 currSum = num1 * num2 + carry;
                 carry = currSum / 10;
                 currSumList.insert(currSum % 10);
             }
             // this if else chain is for copying the contents of one list into
             // another based on the current sum
+
+            if (carry != 0) {
+
+                currSumList.insert(carry);
+
+            }
+
             if (i == 0) {
                 for (int j = 0; j < currSumList.size(); j++) {
                     sum1.insert(currSumList.getObjectAtIndex(j));
@@ -200,4 +196,48 @@ public class RPNCalculator extends LinkedList {
         return result;
     }
 
-}
+
+    void splitAndPrint(String fileLine) {
+
+        /*
+         * Replace all whitespace found in the beginning and ends of the
+         * fileLine. Then
+         * split the fileLine into an array of individual strings. These Strings
+         * are
+         * split with reference to white space found between each string
+         */
+        String[] splited = fileLine.replaceAll("(^\\s+|\\s+$)", "").split(
+            "\\s+");
+
+        /* Iterate through the splited array to print its contents */
+        for (int k = 0; k < splited.length; k++) {
+
+            /* Remove leading zeros */
+            int i = 0;
+            while (i < splited[k].length() && splited[k].charAt(i) == '0'
+                && splited[k].length() != 1 && !splited[k].matches("^[0]+$")) {
+                i++;
+            }
+
+            /* Convert fileLine into StringBuffer as Strings are immutable. */
+            StringBuffer sb = new StringBuffer(splited[k]);
+
+            /*
+             * The StringBuffer replace function removes i characters from given
+             * index (0
+             * here)
+             */
+            sb.replace(0, i, "");
+
+            /* If the String only contains n 0's print one 0 */
+            if (splited[k].matches("^[0]+$")) {
+                System.out.print("0 ");
+            }
+            /* Otherwise print the string buffer */
+            else {
+                System.out.print(sb + " "); // return in String
+            }
+        }
+    }
+
+} // end class
